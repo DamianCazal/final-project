@@ -1,0 +1,31 @@
+<h2>Listado de Pots</h2>
+
+<hr>
+<a href="/posts/new"><button class="btn btn-success">Crear un Post</button></a>
+<hr>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Titulo</th>
+      <th scope="col">Cuerpo</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+{{#each posts}}
+    <tr>
+      <td width="30%">{{this.title}}</td>
+      <td width="40%">{{this.body}}</td>
+      <td>
+        <a href="/posts/{{this.slug}}"><button class="btn btn-secondary">Ver</button></a>
+        <button class="btn btn-primary">Editar</button>
+
+        <form action="/posts/{{this._id}}?_method=DELETE" method="post">
+        <button class="btn btn-danger">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+{{/each}}
+  </tbody>
+</table>
