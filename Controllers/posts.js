@@ -1,10 +1,10 @@
-const Post = require("../Models/posts");
+const Post = require("../models/posts");
 
 const getPosts = async (req, res) => {
   try {
     const posts = await Post.find({}).lean()
     const title = "Lista de posts"
-    res.render('index',{
+    res.render('posts',{
       title,
       posts
     })
@@ -33,9 +33,21 @@ const showPost = async (req, res) => {
 
 const newPost = async (req, res) => {
   try {
-    res.render('new', {})
+    res.render('new')
   } catch (error) {
     
+  }
+}
+const editPost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id).lean()
+
+    res.render('edit', {
+      title: "Editando el post",
+      post
+    })
+  } catch (error) {
+    console.log("error al editar");
   }
 }
 
@@ -50,7 +62,21 @@ const deletePost = async (req, res) => {
 
 const createPost = async (req, res) => {
   try {
+    let post = new Post()
     
+      post.title = req.body.title,
+      post.body = req.body.body
+    
+    post = await post.save()
+    res.redirect(`/posts/${post.slug}`)
+  } catch (error) {
+    console.log("error al crear el post");
+  }
+}
+
+const putPost = async (req, res) => {
+  try {
+    res.render('edit')
   } catch (error) {
     
   }
@@ -62,5 +88,7 @@ module.exports = {
   showPost,
   deletePost,
   newPost,
-  createPost
+  createPost,
+  putPost,
+  editPost
 }

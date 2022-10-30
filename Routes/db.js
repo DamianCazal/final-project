@@ -1,7 +1,7 @@
 const express = require('express')
-const { generatePost } = require('../Helpers/posts')
+const { generatePost } = require('../helpers/posts')
 const routerDev = express.Router()
-const Post = require('../Models/posts')
+const Post = require('../models/posts')
 
 //TODO: Separar por capas esta parte y separa su controlador
 routerDev.get("/db/fresh", async (req, res) => {

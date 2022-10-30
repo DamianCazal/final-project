@@ -1,5 +1,5 @@
 {
-  "name": "final-project-replica",
+  "name": "final-project",
   "version": "1.0.0",
   "description": "Hola soy una descripcion",
   "main": "server.js",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",

@@ -19,7 +19,7 @@
       <td width="40%">{{this.body}}</td>
       <td>
         <a href="/posts/{{this.slug}}"><button class="btn btn-secondary">Ver</button></a>
-        <button class="btn btn-primary">Editar</button>
+        <a href="/posts/edit/{{this._id}}"><button class="btn btn-primary">Editar</button></a>
 
         <form action="/posts/{{this._id}}?_method=DELETE" method="post">
         <button class="btn btn-danger">Eliminar</button>

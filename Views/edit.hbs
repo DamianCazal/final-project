@@ -1,16 +1,15 @@
-
-<form action="/posts" method="post">
+<form action="/posts/{{post.id}}?_method=PUT" method="post">
   <div class="bg-indigo-50 min-h-screen md:px-20 pt-6">
     <div class=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
-      <h1 class="text-center text-2xl font-bold text-gray-500 mb-10">Crear un Post</h1>
+      <h1 class="text-center text-2xl font-bold text-gray-500 mb-10">Editar Post</h1>
       <div class="space-y-4">
         <div>
           <label for="title" class="text-lx font-serif">Titulo:</label>
-          <input type="text" placeholder="Titulo" id="title" name="title" class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" />
+          <input type="text" id="title" name="title" class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" value={{post.title}}/>
         </div>
         <div>
           <label for="body" class="block mb-2 text-lg font-serif">Contenido:</label>
-          <textarea id="body" name="body" cols="30" rows="10" placeholder="Escribe Aqui.." class="w-full font-serif  p-4 text-gray-600 bg-indigo-50 outline-none rounded-md"></textarea>
+          <textarea id="body" name="body" cols="30" rows="10" placeholder="Escribe Aqui.." class="w-full font-serif  p-4 text-gray-600 bg-indigo-50 outline-none rounded-md">{{post.body}}</textarea>
         </div>
         {{!-- <div>
           <label for="name" class="text-lx font-serif">Nombre:</label>
@@ -20,7 +19,7 @@
           <label for="email" class="text-lx font-serif">Correo Electronico:</label>
           <input type="text" placeholder="Correo Electronico" id="email" class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" />
         </div> --}}
-        <a href="/posts"><button class=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">CREAR POST</button></a>
+        <a href="/posts"><button class=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">EDITAR POST</button></a>
       </div>
     </div>
   </div>

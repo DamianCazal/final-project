@@ -6,7 +6,7 @@ const methodOverride = require('method-override')
 const app = express()
 require('dotenv').config()
 
-const { dbconnection } = require('./Database/config')
+const { dbconnection } = require('./database/config')
 //Conectarme a la base de datos
 dbconnection()
 
@@ -21,12 +21,14 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(methodOverride('_method')) // este es necesario para usar la libreria method-override
 
-const routerIndex = require('./Routes')
-const { routerDev } = require('./Routes/db')
-const { routerPosts } = require('./Routes/posts')
+// const { routerDev } = require('./routes/db')
+const { routerPosts } = require('./routes/posts')
+const routerHome = require('./routes/home')
+const routerAuth = require('./routes/auth')
 //rutas
-app.use("/", routerIndex)
-app.use("/", routerDev)
+app.use("/", routerAuth)
+app.use("/", routerHome)
+// app.use("/", routerDev) //ruta para desarrollo
 app.use("/", routerPosts)
 
 
