@@ -33,6 +33,6 @@ authSchema.methods.passwordEncrypt = async (password) => {
 
 authSchema.methods.checkPassword = async function ( password ) {
   return await bcrypt.compare(password, this.password) //aca comparo la contra que recibo en el form con la contra que tiene el modelo
-}
+} //este metodo nos devuelve true o false
 
-module.exports = mongoose.Schema('Auth', authSchema)
+module.exports = mongoose.model('Auth', authSchema)

@@ -1,6 +1,7 @@
+const { slugify } = require("slugify");
 const Post = require("../models/posts");
 
-const getPosts = async (req, res) => {
+const viewPosts = async (req, res) => {
   try {
     const posts = await Post.find({}).lean()
     const title = "Lista de posts"
@@ -31,7 +32,7 @@ const showPost = async (req, res) => {
   }
 }
 
-const newPost = async (req, res) => {
+const viewFormNewPost = async (req, res) => {
   try {
     res.render('new')
   } catch (error) {
@@ -41,17 +42,13 @@ const newPost = async (req, res) => {
 const editPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id).lean()
-
-    res.render('edit', {
-      title: "Editando el post",
-      post
-    })
+    res.render('edit', {post})
   } catch (error) {
     console.log("error al editar");
   }
 }
 
-const deletePost = async (req, res) => {
+const deletePost = async (req, res) => {//controlador terminado
   try {
     await Post.findByIdAndDelete(req.params.id)
     res.redirect('/posts')
@@ -60,15 +57,14 @@ const deletePost = async (req, res) => {
   }
 }
 
-const createPost = async (req, res) => {
+const createPost = async (req, res) => {//funciona
   try {
     let post = new Post()
     
-      post.title = req.body.title,
-      post.body = req.body.body
-    
+    post.title = req.body.title,
+    post.body = req.body.body
     post = await post.save()
-    res.redirect(`/posts/${post.slug}`)
+    res.redirect(`/posts`)
   } catch (error) {
     console.log("error al crear el post");
   }
@@ -76,7 +72,15 @@ const createPost = async (req, res) => {
 
 const putPost = async (req, res) => {
   try {
-    res.render('edit')
+    const update = {
+      title: req.body.title,
+      body: req.body.body,
+      slug: ((req.body.title).split(" ").join("-")).toLowerCase()
+    }
+
+    const post = await Post.findByIdAndUpdate(req.params.id, update).lean()
+    
+    res.redirect('/posts')
   } catch (error) {
     
   }
@@ -84,10 +88,10 @@ const putPost = async (req, res) => {
 
 
 module.exports = {
-  getPosts,
+  viewPosts,
   showPost,
   deletePost,
-  newPost,
+  viewFormNewPost,
   createPost,
   putPost,
   editPost

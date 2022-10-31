@@ -1,3 +1,6 @@
+const passport = require("passport");
+const Auth = require("../models/auth");
+
 const showAuthFormSignup = (req, res) => {
   try {
     res.render("auth/signup")
@@ -5,10 +8,36 @@ const showAuthFormSignup = (req, res) => {
     
   }
 }
-const signup = (req, res) => {
+const signup = async (req, res) => {
+
   try {
-    console.log(req.body);
-    res.json(req.body)
+    let errors = [];
+    const { firstName, lastName, email, password, confirm_password} = req.body
+
+    if ( password !== confirm_password) { //esto es una forma de validar tambien de podria haber validado en el form
+      errors.push({ mesg: "Password do not match."})
+    }
+
+    if (password.length < 4) {
+      errors.push({ mesg: "Password must be at least 4 characters."})
+    }
+
+    if (errors.length > 0) {
+      return res.render('signup' , {
+        errors
+      })
+    }
+
+    const userFound = await Auth.findOne({ email: email })
+
+    if (userFound) {
+      res.redirect('/auth/signup')
+    }
+
+    const newUser = new Auth({firstName, lastName, email, password})
+    newUser.password = await newUser.passwordEncrypt(password)
+    await newUser.save()
+    res.redirect('/auth/signin')
   } catch (error) {
     
   }
@@ -20,17 +49,17 @@ const showAuthFormSignin = (req, res) => {
     
   }
 }
-const signin = (req, res) => {
+const signin = passport.authenticate('local', { // todo esto es parte de password
+  successRedirect: "/",
+  failureRedirect: "/auth/signin"
+})
+
+const logout = async (req, res, next) => {
   try {
-    console.log(req.body);
-    res.json(req.body)
-  } catch (error) {
-    
-  }
-}
-const logout = (req, res) => {
-  try {
-    res.send("")
+    await req.logout((error) => {
+      if (error) return next()
+      res.redirect('/auth/sigin')
+    })
   } catch (error) {
     
   }
