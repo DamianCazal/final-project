@@ -10,8 +10,8 @@ require('./config/passport') //esto es necesario para que funcione la auth
 const app = express()
 require('dotenv').config()
 
-const { dbconnection } = require('./database/config')
 //Conectarme a la base de datos
+const { dbconnection } = require('./database/config')
 dbconnection()
 
 //template engine
@@ -28,21 +28,21 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  store: mongoStore.create({mongoUrl: process.env.DB_LOCAL_URI})
+  store: mongoStore.create({mongoUrl: process.env.DB_REMOTA_URI})
 })) //este se hace necesario para la libreria express-session
 app.use(passport.initialize()) //middleware para passport
 app.use(passport.session())
 
 
-// const { routerDev } = require('./routes/db')
+const { routerDev } = require('./routes/db')
 const { routerPosts } = require('./routes/posts')
 const routerHome = require('./routes/home')
 const routerAuth = require('./routes/auth')
 //rutas
+app.use("/", routerDev) //ruta para desarrollo
 app.use("/", routerPosts)
 app.use("/", routerAuth)
 app.use("/", routerHome)
-// app.use("/", routerDev) //ruta para desarrollo
 
 
 const PORT = process.env.PORT
