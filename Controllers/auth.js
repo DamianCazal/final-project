@@ -1,7 +1,9 @@
 const passport = require("passport");
 const Auth = require("../models/auth");
 
-const showAuthFormSignup = (req, res) => {
+let errors = [];
+
+const showAuthFormSignup = (req, res) => { //solo es vista del formulario
   try {
     res.render("auth/signup")
   } catch (error) {
@@ -9,22 +11,24 @@ const showAuthFormSignup = (req, res) => {
   }
 }
 const signup = async (req, res) => {
-
   try {
-    let errors = [];
     const { firstName, lastName, email, password, confirm_password} = req.body
 
     if ( password !== confirm_password) { //esto es una forma de validar tambien de podria haber validado en el form
-      errors.push({ mesg: "Password do not match."})
+      errors.push({ mesg: "Las contraseñas no coinciden"})
+  
     }
 
     if (password.length < 4) {
-      errors.push({ mesg: "Password must be at least 4 characters."})
+      errors.push({ mesg: "La contraseña debe tener al menos 4 caracteres."})
     }
 
     if (errors.length > 0) {
-      return res.render('signup' , {
-        errors
+      return res.render('auth/signup' , {
+        errors,
+        firstName,
+        lastName,
+        email
       })
     }
 
@@ -37,9 +41,15 @@ const signup = async (req, res) => {
     const newUser = new Auth({firstName, lastName, email, password})
     newUser.password = await newUser.passwordEncrypt(password)
     await newUser.save()
-    res.redirect('/auth/signin')
-  } catch (error) {
+    //aca creamos la variable de session
+    req.flash("mensaje", "se registro correctamente")
     
+    setTimeout(() => { //aca le pongo un retardo para que se vea el cartel de registro exitoso
+      res.redirect('/auth/signin')
+    }, 2000);
+    
+  } catch (error) {
+    console.log("error al registrarse", error);
   }
 }
 const showAuthFormSignin = (req, res) => {
@@ -58,7 +68,7 @@ const logout = async (req, res, next) => {
   try {
     await req.logout((error) => {
       if (error) return next()
-      res.redirect('/auth/sigin')
+      res.redirect('/auth/signin')
     })
   } catch (error) {
     
@@ -70,5 +80,5 @@ module.exports = {
   signup,
   showAuthFormSignin,
   signin,
-  logout
+  logout,
 }

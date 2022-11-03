@@ -1,0 +1,33 @@
+    <navbar class="flex items-center justify-between py-2 border-b w-full">
+      <a href="/" class="px-2 lg:px-0 uppercase font-bold text-purple-800">
+        <img class="w-[64px]" src="../uploads/assets/logo.png">
+      </a>
+      <ul class="inline-flex items-center">
+        <li class="px-2 md:px-4">
+          <a href="/" class="text-purple-600 font-semibold hover:text-purple-500"> Inicio </a>
+        </li>
+        <li class="px-2 md:px-4">
+          <a href="/posts" class="text-gray-500 font-semibold hover:text-purple-500"> Mis Posts </a>
+        </li>
+        <li class="px-2 md:px-4">
+          <a href="#" class="text-gray-500 font-semibold hover:text-purple-500"> Sobre mi </a>
+        </li>
+        <li class="px-2 md:px-4">
+          <a href="#" class="text-gray-500 font-semibold hover:text-purple-500"> Contacto </a>
+        </li>
+      </ul>
+      <ul class="inline-flex items-center">
+        {{#if user}}
+          <li class="px-2 md:px-4 hidden md:block">
+            <a href="/auth/logout" class="text-gray-500 font-semibold hover:text-purple-500"> Cerrar Sesion </a>
+          </li>
+          {{else}}
+          <li class="px-2 md:px-4 hidden md:block">
+            <a href="/auth/signin" class="text-gray-500 font-semibold hover:text-purple-500"> Iniciar Sesion </a>
+          </li>
+        {{/if}}
+        <li class="px-2 md:px-4 hidden md:block">
+          <a href="/auth/signup" class="text-gray-500 font-semibold hover:text-purple-500"> Registrarse </a>
+        </li>
+      </ul>
+    </navbar>

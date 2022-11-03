@@ -1,24 +1,28 @@
-<form action="/posts/{{post._id}}?_method=PUT" method="post">
+<form action="/posts/{{post._id}}?_method=PUT" method="post" enctype="multipart/form-data">
   <div class="bg-indigo-50 min-h-screen md:px-20 pt-6">
     <div class=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
       <h1 class="text-center text-2xl font-bold text-gray-500 mb-10">Editar Post</h1>
       <div class="space-y-4">
         <div>
           <label for="title" class="text-lx font-serif">Titulo:</label>
-          <input type="text" id="title" name="title" class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" value={{post.title}} />
+          <input type="text" id="title" name="title" class="ml-2 outline-none py-1 px-2 border-2 rounded-md" value="{{post.title}}" />
         </div>
         <div>
           <label for="body" class="block mb-2 text-lg font-serif">Contenido:</label>
           <textarea id="body" name="body" cols="30" rows="10" placeholder="Escribe Aqui.." class="w-full font-serif  p-4 text-gray-600 bg-indigo-50 outline-none rounded-md">{{post.body}}</textarea>
         </div>
-        {{!-- <div>
-          <label for="name" class="text-lx font-serif">Nombre:</label>
-          <input type="text" placeholder="Nombre" id="name" class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" />
+          <div class="file_upload p-5 relative border-4 border-dotted border-gray-300 rounded-lg mx-auto" style="width: 450px">
+            <svg class="text-indigo-500 w-24 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+            <div class="input_field flex flex-col w-max mx-auto text-center">
+              <label>
+                <input class="text-sm cursor-pointer w-36 hidden" type="file" name="archivo" />
+                <div class="text bg-indigo-600 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-indigo-500">Seleccionar Imagen</div>
+              </label>
+            <div class="title text-indigo-500 uppercase">o soltar imagen aquí</div>
+          </div>
         </div>
-        <div>
-          <label for="email" class="text-lx font-serif">Correo Electronico:</label>
-          <input type="text" placeholder="Correo Electronico" id="email" class="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" />
-        </div> --}}
+
+
         <button class=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">EDITAR POST</button>
       </div>
     </div>

@@ -1,31 +1,36 @@
-<h2>Listado de Pots</h2>
+{{> navbar}}
 
-<hr>
-<a href="/posts/new"><button class="btn btn-success">Crear un Post</button></a>
-<hr>
+<h2 class="font-bold text-lg uppercase text-gray-700 px-1 my-2">Listado de Pots</h2>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Titulo</th>
-      <th scope="col">Cuerpo</th>
-      <th scope="col">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-{{#each posts}}
-    <tr>
-      <td width="30%">{{this.title}}</td>
-      <td width="40%">{{this.body}}</td>
-      <td>
-        <a href="/posts/{{this.slug}}"><button class="btn btn-secondary">Ver</button></a>
-        <a href="/posts/edit/{{this._id}}"><button class="btn btn-primary">Editar</button></a>
+  <div class="flex flex-row justify-end">
+    <a href="/posts/new"><button class="border-2 border-blue-500 text-black px-3 py-1 my-3 rounded-md text-1xl font-medium hover:bg-blue-500 transition duration-300">Crear un Post</button></a>
+  </div>
 
-        <form action="/posts/{{this._id}}?_method=DELETE" method="post">
-        <button class="btn btn-danger">Eliminar</button>
-        </form>
-      </td>
-    </tr>
-{{/each}}
-  </tbody>
-</table>
+<table class="min-w-full border-collapse block md:table">
+		<thead class="block md:table-header-group">
+			<tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+				<th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Titulo</th>
+				<th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Fecha de Creacion</th>
+				<th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Fecha de Modificacion</th>
+				<th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Acciones</th>
+			</tr>
+		</thead>
+		<tbody class="block md:table-row-group">
+      {{#each posts}}
+			<tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+				<td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Titulo</span>{{this.title}}</td>
+				<td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Fecha de Creacion</span>{{this.created}}</td>
+				<td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Fecha de Modificacion</span>{{this.update}}</td>
+				<td class="p-2 md:border md:border-grey-500 text-left block md:table-cell flex">
+					<span class="inline-block w-1/3 md:hidden font-bold">Acciones</span>
+					<a href="/posts/{{this.slug}}"><button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 border border-gray-500 rounded">Ver</button></a>
+					<a href="/posts/edit/{{this._id}}"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Editar</button></a>
+          <form action="/posts/{{this._id}}?_method=DELETE" method="post" class="contents">
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Borrar</button>
+          </form>
+				</td>
+			</tr>
+      {{/each}}
+		</tbody>
+	</table>
+  {{> footer}}

@@ -3,7 +3,7 @@ const Post = require("../models/posts");
 
 const viewPosts = async (req, res) => {
   try {
-    const posts = await Post.find({}).lean()
+    const posts = await Post.find({user: `${req.user.firstName} ${req.user.lastName}`}).lean()
     const title = "Lista de posts"
     res.render('posts',{
       title,
@@ -21,12 +21,7 @@ const showPost = async (req, res) => {
     const post = await Post.findOne({slug: req.params.slug}).lean()
     if ( post === null ) res.redirect("/posts")
 
-    res.render('show', 
-      {
-        title: `${post.title}`,
-        post
-      }
-    )
+    res.render('show', {post})
   } catch (error) {
     console.log(error);
   }
@@ -50,32 +45,52 @@ const editPost = async (req, res) => {
 
 const deletePost = async (req, res) => {//controlador terminado
   try {
-    await Post.findByIdAndDelete(req.params.id)
+    await Post.findByIdAndDelete(req.params.id).lean()
     res.redirect('/posts')
   } catch (error) {
-    console.log(error);
+    console.log("error al modificar", error);
   }
 }
 
 const createPost = async (req, res) => {//funciona
+  const fecha = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
   try {
     let post = new Post()
     
-    post.title = req.body.title,
+    post.title = req.body.title
     post.body = req.body.body
+    post.user = `${req.user.firstName} ${req.user.lastName}`
+    post.image = req.file.filename  //en req.file esta los datos del archivo gracias a multer
+    post.created = fecha
+
     post = await post.save()
+    
     res.redirect(`/posts`)
   } catch (error) {
-    console.log("error al crear el post");
+    console.log("error al crear el post",error);
   }
 }
 
 const putPost = async (req, res) => {
+  const fecha = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+  let update = {};
   try {
-    const update = {
-      title: req.body.title,
-      body: req.body.body,
-      slug: ((req.body.title).split(" ").join("-")).toLowerCase()
+    if (req.file !== undefined) {
+      update = {
+        title: req.body.title,
+        body: req.body.body,
+        slug: ((req.body.title).split(" ").join("-")).toLowerCase(),
+        image: req.file.filename,
+        update: fecha
+      }
+    } else {
+      update = {
+        title: req.body.title,
+        body: req.body.body,
+        slug: ((req.body.title).split(" ").join("-")).toLowerCase(),
+        update: fecha
+
+      }
     }
 
     const post = await Post.findByIdAndUpdate(req.params.id, update).lean()

@@ -1,1 +1,1 @@
-console.log("hola desde hbs");
+console.log("hola desde la carpeta public");
