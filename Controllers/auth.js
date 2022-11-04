@@ -69,7 +69,7 @@ const logout = async (req, res, next) => {
   try {
     await req.logout((error) => {
       if (error) return next()
-      res.redirect('/auth/signin')
+      res.redirect('/')
     })
   } catch (error) {
     

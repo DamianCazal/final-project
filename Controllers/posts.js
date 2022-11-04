@@ -106,7 +106,7 @@ const putPost = async (req, res) => {
     
     res.redirect('/posts')
   } catch (error) {
-    
+    console.log("error al modificar el post", error);
   }
 }
 

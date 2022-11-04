@@ -20,7 +20,7 @@ routerPosts.get('/', getIndex)
 
 routerPosts.get("/posts", isAuthenticated, viewPosts)//vista de todos los post
 routerPosts.get("/posts/new", isAuthenticated, viewFormNewPost)// vista del form post para crear un nuevo post
-//TODO:arreglar el tema del value que no se ve completo al editar un post
+
 routerPosts.get("/posts/edit/:id", isAuthenticated, editPost)//vista del form para editar un post
 routerPosts.get("/posts/:slug", isAuthenticated, showPost)//vista de un post en particular
 
