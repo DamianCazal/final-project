@@ -1,1 +1,0 @@
-console.log("hola desde la carpeta public");

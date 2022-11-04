@@ -1,6 +1,15 @@
 const { slugify } = require("slugify");
 const Post = require("../models/posts");
 
+const getIndex = async (req, res) => {
+  const title = "Blog Proyecto"
+  const post = await Post.find({}).lean()
+  res.render('index', {
+    post,
+    title
+  })
+}
+
 const viewPosts = async (req, res) => {
   try {
     const posts = await Post.find({user: `${req.user.firstName} ${req.user.lastName}`}).lean()
@@ -39,7 +48,7 @@ const editPost = async (req, res) => {
     const post = await Post.findById(req.params.id).lean()
     res.render('edit', {post})
   } catch (error) {
-    console.log("error al editar");
+    console.log("error al editar",error);
   }
 }
 
@@ -103,6 +112,7 @@ const putPost = async (req, res) => {
 
 
 module.exports = {
+  getIndex,
   viewPosts,
   showPost,
   deletePost,

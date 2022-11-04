@@ -1,6 +1,7 @@
 const passport = require("passport");
 const Auth = require("../models/auth");
 
+
 let errors = [];
 
 const showAuthFormSignup = (req, res) => { //solo es vista del formulario
@@ -11,12 +12,12 @@ const showAuthFormSignup = (req, res) => { //solo es vista del formulario
   }
 }
 const signup = async (req, res) => {
+  let errors = [];
   try {
     const { firstName, lastName, email, password, confirm_password} = req.body
 
     if ( password !== confirm_password) { //esto es una forma de validar tambien de podria haber validado en el form
       errors.push({ mesg: "Las contraseñas no coinciden"})
-  
     }
 
     if (password.length < 4) {
@@ -44,7 +45,7 @@ const signup = async (req, res) => {
     //aca creamos la variable de session
     req.flash("mensaje", "se registro correctamente")
     
-    setTimeout(() => { //aca le pongo un retardo para que se vea el cartel de registro exitoso
+    setTimeout(() => {
       res.redirect('/auth/signin')
     }, 2000);
     

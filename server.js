@@ -46,14 +46,12 @@ app.use((req, res, next) => {
 
 const { routerDev } = require('./routes/db')
 const { routerPosts } = require('./routes/posts')
-const routerIndex = require('./routes/index')
 const routerAuth = require('./routes/auth')
 
 //Middlewares para las rutas
 app.use("/", routerDev) //ruta para desarrollo
 app.use("/", routerPosts)
 app.use("/", routerAuth)
-app.use("/", routerIndex)
 
 const PORT = process.env.PORT
 app.listen(PORT, err => {

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { default: slugify } = require('slugify');
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const postSchema = new mongoose.Schema(
     {
@@ -35,6 +36,8 @@ const postSchema = new mongoose.Schema(
     versionKey: false
   }
 )
+
+postSchema.plugin(mongoosePaginate)// con esta linea ya nuestro esquema puede ser paginado
 
 //middleware .pre()
 postSchema.pre('validate', function(next) {

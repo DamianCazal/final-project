@@ -1,6 +1,6 @@
 const express = require('express')
 const routerPosts = express.Router()
-const { viewPosts, showPost, deletePost, viewFormNewPost, createPost, putPost, editPost} = require('../controllers/posts')
+const { viewPosts, showPost, deletePost, viewFormNewPost, createPost, putPost, editPost, getIndex} = require('../controllers/posts')
 const isAuthenticated = require('../middlewares/isauthenticated')
 const multer = require('multer')
 
@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage})
 
+routerPosts.get('/', getIndex)
 
 routerPosts.get("/posts", isAuthenticated, viewPosts)//vista de todos los post
 routerPosts.get("/posts/new", isAuthenticated, viewFormNewPost)// vista del form post para crear un nuevo post
